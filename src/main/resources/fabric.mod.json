@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "anubis",
+  "version": "1.0.0",
+  "name": "Anubis Client",
+  "description": "Clean, legit PvP utility ClickGUI with a spooky Anubis theme. No cheats.",
+  "authors": ["You"],
+  "environment": "client",
+  "entrypoints": { "client": ["com.anubis.client.AnubisClient"] },
+  "mixins": ["anubis.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.17.0",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
