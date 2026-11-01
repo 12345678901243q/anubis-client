@@ -7,7 +7,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.RespawnAnchorBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.option.ParticlesMode;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.decoration.EndCrystalEntity;
@@ -31,6 +30,12 @@ public final class ModuleManager {
     private static final int ORANGE = 0xFFFF7A18, PURPLE = 0xFFB07CFF, WHITE = 0xFFFFFFFF;
 
     private static MinecraftClient mc() { return MinecraftClient.getInstance(); }
+    
+    private static void setParticles(int i) {
+        var opt = mc().options.getParticles();
+        var all = opt.getValue().getDeclaringClass().getEnumConstants();
+        opt.setValue(all[i]);
+    }
 
     private static void add(Module m) { ALL.add(m); }
 
@@ -174,15 +179,15 @@ public final class ModuleManager {
         add(toggle("Damage Tilt Off", "No camera shake when you take damage.", Category.ESSENTIALS,
                 () -> mc().options.getDamageTiltStrength().setValue(0.0),
                 () -> mc().options.getDamageTiltStrength().setValue(1.0)));
-        add(toggle("View Bobbing Off", "Stops the walking camera bob.", Category.ESSENTIALS,
+                add(toggle("View Bobbing Off", "Stops the walking camera bob.", Category.ESSENTIALS,
                 () -> mc().options.getBobView().setValue(false),
                 () -> mc().options.getBobView().setValue(true)));
         add(toggle("Auto Jump", "Vanilla auto-jump up blocks.", Category.ESSENTIALS,
                 () -> mc().options.getAutoJump().setValue(true),
                 () -> mc().options.getAutoJump().setValue(false)));
         add(toggle("Low Particles", "Minimal particles for a clearer screen.", Category.ESSENTIALS,
-                () -> mc().options.getParticles().setValue(ParticlesMode.MINIMAL),
-                () -> mc().options.getParticles().setValue(ParticlesMode.ALL)));
+                () -> setParticles(2),
+                () -> setParticles(0)));
 
         add(new Module("Zoom", "Hold C to zoom in.", Category.ESSENTIALS) {
             private boolean zooming; private int saved;
